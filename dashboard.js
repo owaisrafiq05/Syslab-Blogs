@@ -15,6 +15,13 @@ import {
   } from "./firebase.js";
 
 
+  var exampleModal1 = document.getElementById("exampleModal");
+
+  var myModal = new bootstrap.Modal(document.getElementById("exampleModal"), {
+    keyboard: false,
+  });
+
+
   function logout() {
     localStorage.removeItem("uid");
     window.location.href = "index.html";
@@ -32,13 +39,13 @@ import {
   
   
   // upload image function
-  document.getElementById('upload-btn').addEventListener('click', function (event) {
-    // Prevent the default button behavior, which may be closing the modal
-    event.preventDefault();
+  // document.getElementById('upload-btn').addEventListener('click', function (event) {
+  //   // Prevent the default button behavior, which may be closing the modal
+  //   event.preventDefault();
   
-    // Trigger click on the hidden file input
-    document.getElementById('file-input').click();
-  });
+  //   // Trigger click on the hidden file input
+  //   document.getElementById('file-input').click();
+  // });
   
   // Handle file selection
   document.getElementById('file-input').addEventListener('change', function () {
@@ -56,7 +63,7 @@ import {
 
 
   async function addpost() {
-    event.preventDefault();
+    
     var fileinput = document.getElementById("file-input");
     var imageURL;
   
@@ -81,16 +88,17 @@ import {
       title: title.value,
       description: description.value,
       link: link.value,
-      uid: uid,
       image: imageURL,
       timestamp: timestamp,
       // timestamp: timestamp,
     };
+    console.log(postObj);
     const docRef = await addDoc(collection(db, "posts"), postObj);
-    var userCredit = await getImageofUser(uid);
-    timestamp = calculateTimeAgo(timestamp);
-    feebck.innerHTML += createUI(createUI(title.value, description.value, imageURL, linkURL,
-    docRef.id, uid, user.value, timestamp))
+    //  var userCredit = await getImageofUser(uid);
+    // timestamp = calculateTimeAgo(timestamp);
+    var feebck = document.getElementById("feebck");
+    feebck.innerHTML += createUI(title.value, description.value, imageURL, linkURL,
+    docRef.id, uid, user.value, timestamp)
     myModal.hide();
     title.value = "";
     description.value = "";
