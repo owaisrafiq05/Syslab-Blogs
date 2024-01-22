@@ -62,6 +62,56 @@ import {
   });
 
 
+
+  window.addEventListener("load", async function () {
+    console.log("blog load");
+    var uid = localStorage.getItem("uid");
+    console.log(uid, "uid");
+  
+    if (!uid) {
+      location.replace("./index.html");
+      return;
+    }
+    var BlogArr = [];
+    const querySnapshot = await getDocs(collection(db, "posts"));
+    querySnapshot.forEach(function (doc) {
+      // console.log(doc.data().tilte);
+      // console.log(doc.id);
+      // BlogArr.push(doc.data());
+      BlogArr.push({
+      user: doc.data().user,  
+      title: doc.data().title,
+      description: doc.data().description,
+      uid: doc.data().uid,
+      link: doc.data().link,
+      image: doc.data().image,
+      timestamp: doc.data().timestamp,
+      });
+    });
+    console.log(BlogArr, "BlogArr");
+  
+    // for of loop
+  
+    for (var value of BlogArr) {
+      // renderCardUI(title, desc, image, id)
+          parent.innerHTML += createUI(
+            user.value, 
+            title.value, 
+            description.value, 
+            image, 
+            link.value,
+            docRef.id, 
+            timestamp
+          );
+        }
+      }
+    );
+  
+
+
+
+
+  var parent = document.getElementById("parent");
   async function addpost() {
     
     var fileinput = document.getElementById("file-input");
@@ -87,39 +137,41 @@ import {
       user: user.value,  
       title: title.value,
       description: description.value,
+      uid: uid,
       link: link.value,
       image: imageURL,
-      timestamp: timestamp,
+      timestamp: timestamp
       // timestamp: timestamp,
     };
     console.log(postObj);
     const docRef = await addDoc(collection(db, "posts"), postObj);
     //  var userCredit = await getImageofUser(uid);
     // timestamp = calculateTimeAgo(timestamp);
-    var feebck = document.getElementById("feebck");
-    feebck.innerHTML += createUI(title.value, description.value, imageURL, linkURL,
-    docRef.id, uid, user.value, timestamp)
+    parent.innerHTML += createUI(user.value, title.value, description.value, imageURL, link.value,
+    docRef.id, timestamp)
     myModal.hide();
+    user.value="";
     title.value = "";
     description.value = "";
+    link.value = "";
     file.value = "";
   }
   
   window.addpost = addpost;
 
 
-  function createUI(title, description, image, link, unID, uid, user, timestamp) {
+  function createUI(user,title,description,image,link,timestamp) {
     var length = description.length;
-    var uniqueId = unID; // Unique ID for each card
+    // Unique ID for each card
     // console.log(unID);
-    if(!userimage)
+    if(!image)
     {
-      userimage="https://firebasestorage.googleapis.com/v0/b/my-first-project-1-c98da.appspot.com/o/images%2Fscreen-shot-2023-04-13-at-10-35-31-am.webp?alt=media&token=b014caf2-8194-4b96-b122-49c06b561240"
+      image="https://firebasestorage.googleapis.com/v0/b/my-first-project-1-c98da.appspot.com/o/images%2Fscreen-shot-2023-04-13-at-10-35-31-am.webp?alt=media&token=b014caf2-8194-4b96-b122-49c06b561240"
     }
     var UI = `<div class="col-lg-4">
-    <a id=${uniqueId} href=${link} target="_blank">
+    <a href=${link} target="_blank">
     <div class="card">
-      <div class="card-image"><img src=${image} alt=""></div>
+      <div class="card-image"><img src=${image} alt="" ></div>
       <p class="card-title">${title}</p>
       <p class="card-body">
         ${description}
