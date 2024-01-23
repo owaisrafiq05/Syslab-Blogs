@@ -62,6 +62,7 @@ import {
   });
 
 
+  var BlogArr = [];
 
   window.addEventListener("load", async function () {
     console.log("blog load");
@@ -72,7 +73,6 @@ import {
       location.replace("./index.html");
       return;
     }
-    var BlogArr = [];
     const querySnapshot = await getDocs(collection(db, "posts"));
     querySnapshot.forEach(function (doc) {
       // console.log(doc.data().tilte);
@@ -88,26 +88,61 @@ import {
       timestamp: doc.data().timestamp,
       });
     });
-    console.log(BlogArr, "BlogArr");
+    BlogArr.map((item,id)=>{
+      let parent = document.getElementById('parent')
+      return parent.innerHTML += `
+        <div key=${id} class="col-lg-4">
+        <a href=${item.link} target="_blank">
+       <div class="card">
+         <div class="card-image"><img src=${item.image} alt="" ></div>
+         <p class="card-title">${item.title}</p>
+         <p class="card-body">
+           ${item.description}
+         </p>
+         <p class="footer">Written by <span class="by-name">${item.user}</span> on <span class="date">${item.timestamp}</span></p>
+       </div>
+     </a>
+   </div>
+      `;
+
+    })
+
+    // console.log(BlogArr, "BlogArr");
   
     // for of loop
   
     for (var value of BlogArr) {
       // renderCardUI(title, desc, image, id)
-          parent.innerHTML += createUI(
-            user.value, 
-            title.value, 
-            description.value, 
-            image, 
-            link.value,
-            docRef.id, 
-            timestamp
-          );
+          // parent.innerHTML += createUI(
+          //   user.value, 
+          //   title.value, 
+          //   description.value, 
+          //   // image, 
+          //   link.value,
+          //   docRef.id, 
+          //   timestamp
+          // );
         }
       }
     );
+
+
   
 
+  //    ` 
+  //         <div key=${id} class="col-lg-4">
+  //   <a href=${item.link} target="_blank">
+  //   <div class="card">
+  //     <div class="card-image"><img src=${item.image} alt="" ></div>
+  //     <p class="card-title">${item.title}</p>
+  //     <p class="card-body">
+  //       ${item.description}
+  //     </p>
+  //     <p class="footer">Written by <span class="by-name">${item.user}</span> on <span class="date">${item.timestamp}</span></p>
+  //   </div>
+  // </a>
+  // </div>
+  //       `
 
 
 
@@ -132,7 +167,7 @@ import {
   
     // Add a timestamp field
     // var timestamp = firebase.firestore.FieldValue.serverTimestamp();
-    var timestamp = new Date().getTime();
+    var timestamp = new Date().toLocaleString();
     var postObj = {
       user: user.value,  
       title: title.value,
@@ -147,14 +182,16 @@ import {
     const docRef = await addDoc(collection(db, "posts"), postObj);
     //  var userCredit = await getImageofUser(uid);
     // timestamp = calculateTimeAgo(timestamp);
-    parent.innerHTML += createUI(user.value, title.value, description.value, imageURL, link.value,
-    docRef.id, timestamp)
+    // parent.innerHTML += createUI(user.value, title.value, description.value, imageURL, link.value,
+    // docRef.id, timestamp)
     myModal.hide();
     user.value="";
     title.value = "";
     description.value = "";
     link.value = "";
     file.value = "";
+
+    window.location.reload();
   }
   
   window.addpost = addpost;
