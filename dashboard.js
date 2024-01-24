@@ -90,20 +90,30 @@ import {
     });
     BlogArr.map((item,id)=>{
       let parent = document.getElementById('parent')
-      return parent.innerHTML += `
-        <div key=${id} class="col-lg-4">
-        <a href=${item.link} target="_blank">
-       <div class="card">
-         <div class="card-image"><img src=${item.image} alt="" ></div>
-         <p class="card-title">${item.title}</p>
-         <p class="card-body">
-           ${item.description}
-         </p>
-         <p class="footer">Written by <span class="by-name">${item.user}</span> on <span class="date">${item.timestamp}</span></p>
-       </div>
-     </a>
-   </div>
-      `;
+      return (parent.innerHTML += `
+        <div key=${id} class="card col-lg-4">
+        <a class="card_link" href=${item.link} target="_blank">
+        <div class="card__header">
+            <img src=${item.image} alt="card__image"
+                class="card__image" width="600">
+        </div>
+        <div class="card__body">
+            <span class="tag">News</span>
+            <h4>${item.title}</h4>
+            <p>${item.description}</p>
+        </div>
+        <div class="card__footer">
+            <div class="user">
+                <img src="https://i.pravatar.cc/40" alt="user__image" class="user__image">
+                <div class="user__info">
+                    <h5>${item.user}</h5>
+                    <small>${item.timestamp}</small>
+                </div>
+            </div>
+        </div>
+        </a>
+    </div>
+      `);
 
     })
 
