@@ -102,6 +102,7 @@ import {
             <h4>${item.title}</h4>
             <p>${item.description}</p>
         </div>
+        <button><a href="/blog.html">Read More</a></button>
         <div class="card__footer">
             <div class="user">
                 <img src="https://i.pravatar.cc/40" alt="user__image" class="user__image">
@@ -113,6 +114,39 @@ import {
         </div>
         </a>
     </div>
+      `);
+
+    })
+
+
+    BlogArr.map((item,id)=>{
+      let parent2 = document.getElementById('parent2')
+      return (parent2.innerHTML += `
+      <h1 class="heading">${item.title}</h1>
+      <div class="hero-container">
+      <div class="author">
+          <img src="OIP.jpg" alt="" class="author_img">
+          <div class="desc">
+          <h4>${item.user}</h4>
+          <small>Student of FAST NUCES</small>
+          </div>
+      </div>
+  
+      <div class="posted">
+          <p>Posted on ${item.timestamp}</p>
+      </div>
+      </div>
+  
+  
+      <div class="header-line"></div> 
+  
+      <div class="image">
+          <img src=${item.image} alt="">
+      </div>
+  
+      <div class="content">
+          <p>${item.description}</p>
+      </div>
       `);
 
     })
