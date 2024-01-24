@@ -155,7 +155,9 @@ import {
     if (fileinput.files[0]) {
       imageURL = await imageUpload(fileinput.files[0]);
     } else {
-      imageURL = "https://firebasestorage.googleapis.com/v0/b/my-first-project-1-c98da.appspot.com/o/images%2Fclose-up-elegant-decoration-house-1.jpg?alt=media&token=3757c49e-cbc0-452f-8408-ced38f5d6eff";
+      // imageURL = "https://firebasestorage.googleapis.com/v0/b/my-first-project-1-c98da.appspot.com/o/images%2Fclose-up-elegant-decoration-house-1.jpg?alt=media&token=3757c49e-cbc0-452f-8408-ced38f5d6eff";
+      imageURL =
+        " https://firebasestorage.googleapis.com/v0/b/syslab-blogs.appspot.com/o/images%2Fno-image.jpg?alt=media&token=016b2c13-9540-42fc-8f71-1e9d6a0c59f9";
     }
   
     var user = document.getElementById("user");
@@ -182,8 +184,8 @@ import {
     const docRef = await addDoc(collection(db, "posts"), postObj);
     //  var userCredit = await getImageofUser(uid);
     // timestamp = calculateTimeAgo(timestamp);
-    // parent.innerHTML += createUI(user.value, title.value, description.value, imageURL, link.value,
-    // docRef.id, timestamp)
+    parent.innerHTML += createUI(user.value, title.value, description.value, imageURL, link.value,
+    docRef.id, timestamp);
     myModal.hide();
     user.value="";
     title.value = "";
@@ -191,7 +193,7 @@ import {
     link.value = "";
     file.value = "";
 
-    window.location.reload();
+    // window.location.reload();
   }
   
   window.addpost = addpost;
@@ -199,6 +201,7 @@ import {
 
   function createUI(user,title,description,image,link,timestamp) {
     var length = description.length;
+    timestamp = new Date().toLocaleString();
     // Unique ID for each card
     // console.log(unID);
     if(!image)
