@@ -34,6 +34,10 @@ import {
     // Additional code if needed
   });
   
+
+  function redirect() {
+    console.log("count");
+  }
   
   
   
@@ -79,7 +83,8 @@ import {
       // console.log(doc.id);
       // BlogArr.push(doc.data());
       BlogArr.push({
-      user: doc.data().user,  
+        user: doc.data().user,  
+        id:doc.data().id,
       title: doc.data().title,
       description: doc.data().description,
       uid: doc.data().uid,
@@ -88,68 +93,55 @@ import {
       timestamp: doc.data().timestamp,
       });
     });
-    BlogArr.map((item,id)=>{
-      let parent = document.getElementById('parent')
-      return (parent.innerHTML += `
-        <div key=${id} class="card col-lg-4">
-        <a class="card_link" href=${item.link} target="_blank">
+  BlogArr.map((item, id) => {
+    console.log(item)
+    let parent = document.getElementById("parent");
+    return parent.innerHTML += `
+    <div key=${id} class="card col-lg-4">
         <div class="card__header">
-            <img src=${item.image} alt="card__image"
-                class="card__image" width="600">
+          <img src=${
+            item.image
+          } alt="card__image" class="card__image" width="600">
         </div>
         <div class="card__body">
-            <span class="tag">News</span>
-            <h4>${item.title}</h4>
-            <p>${item.description}</p>
-        </div>
-        <button><a href="/blog.html">Read More</a></button>
-        <div class="card__footer">
-            <div class="user">
-                <img src="https://i.pravatar.cc/40" alt="user__image" class="user__image">
-                <div class="user__info">
-                    <h5>${item.user}</h5>
-                    <small>${item.timestamp}</small>
-                </div>
-            </div>
-        </div>
-        </a>
-    </div>
-      `);
-
-    })
-
-
-    BlogArr.map((item,id)=>{
-      let parent2 = document.getElementById('parent2')
-      return (parent2.innerHTML += `
-      <h1 class="heading">${item.title}</h1>
-      <div class="hero-container">
-      <div class="author">
-          <img src="OIP.jpg" alt="" class="author_img">
-          <div class="desc">
-          <h4>${item.user}</h4>
-          <small>Student of FAST NUCES</small>
-          </div>
-      </div>
-  
-      <div class="posted">
-          <p>Posted on ${item.timestamp}</p>
-      </div>
-      </div>
-  
-  
-      <div class="header-line"></div> 
-  
-      <div class="image">
-          <img src=${item.image} alt="">
-      </div>
-  
-      <div class="content">
+          <span class="tag">News</span>
+          <h4>${item.title}</h4>
           <p>${item.description}</p>
-      </div>
-      `);
+        </div>
+        <button data-id=${item.id} class="read-more"><a href='/blog'>read more</a></button>
+        <div class="card__footer">
+          <div class="user">
+            <img src="https://i.pravatar.cc/40" alt="user__image" class="user__image">
+            <div class="user__info">
+              <h5>${item.user}</h5>
+              <small>${item.timestamp}</small>
+            </div>
+          </div>
+        </div>
 
-    })
+    </div>
+  `;
+  
+  // parent.appendChild(parent);
+  
+  
+});
+
+let readMoreButtons = document.getElementsByClassName("read-more");
+let buttonsArray = Array.from(readMoreButtons);
+
+buttonsArray.forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    let blogId = e.target.getAttribute("data-id");
+    this.localStorage.setItem('blogID' ,blogId )
+  });
+});
+// console.log(readMoreButton)
+
+// console.log(readMoreButton)
+
+
+    
 
     // console.log(BlogArr, "BlogArr");
   
@@ -190,6 +182,8 @@ import {
 
 
 
+
+
   var parent = document.getElementById("parent");
   async function addpost() {
     
@@ -213,15 +207,16 @@ import {
   
     // Add a timestamp field
     // var timestamp = firebase.firestore.FieldValue.serverTimestamp();
-    var timestamp = new Date().toLocaleString();
+    var timestamp = new Date();
     var postObj = {
-      user: user.value,  
+      id: timestamp.getTime(),
+      user: user.value,
       title: title.value,
       description: description.value,
       uid: uid,
       link: link.value,
       image: imageURL,
-      timestamp: timestamp
+      timestamp: timestamp.toLocaleString(),
       // timestamp: timestamp,
     };
     console.log(postObj);
