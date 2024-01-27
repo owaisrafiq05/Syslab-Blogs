@@ -730,7 +730,7 @@ nav {
           flex-direction: column;
           align-items: center;
           
-          width: clamp(36rem, calc(20rem + 2vw), 22rem);
+          width: clamp(30rem, calc(20rem + 2vw), 22rem);
           overflow: hidden;
           box-shadow: 0 .1rem 1rem rgba(0, 0, 0, 0.1);
           border-radius: 1em;
@@ -740,6 +740,12 @@ nav {
           background-size: cover;
           object-fit: fill;
           background-repeat: no-repeat;
+        }
+
+        @media screen and (max-width: 515px) {
+          .card{
+            width: clamp(20rem, calc(20rem + 2vw), 22rem);
+          }
         }
     
         .card__body {

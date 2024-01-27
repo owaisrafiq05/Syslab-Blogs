@@ -91,51 +91,81 @@ import {
       link: doc.data().link,
       image: doc.data().image,
       timestamp: doc.data().timestamp,
+      blogId: doc.id,
       });
     });
-  BlogArr.map((item, id) => {
-    console.log(item)
-    let parent = document.getElementById("parent");
-    return parent.innerHTML += `
-    <div key=${id} class="card col-lg-4">
-        <div class="card__header">
-          <img src=${
-            item.image
-          } alt="card__image" class="card__image" width="600">
-        </div>
-        <div class="card__body">
-          <span class="tag">News</span>
-          <h4>${item.title}</h4>
-          <p>${item.description}</p>
-        </div>
-        <button data-id=${item.id} class="read-more"><a href='/blog'>read more</a></button>
-        <div class="card__footer">
-          <div class="user">
-            <img src="https://i.pravatar.cc/40" alt="user__image" class="user__image">
-            <div class="user__info">
-              <h5>${item.user}</h5>
-              <small>${item.timestamp}</small>
+    // console.log(blogId);
+
+    function handleReadMoreClick(blogId) {
+      console.log('Button clicked for item with id:', blogId);
+      // Add your logic for handling the click event here
+    }
+    BlogArr.map((item, index) => {
+      console.log(item);
+      let blogid = item.blogId;
+      console.log(blogid);
+      window.localStorage.setItem("blogId", blogid);
+    
+      let parent = document.getElementById("parent");
+      parent.innerHTML += `
+        <div key=${index} class="card col-lg-4">
+            <div class="card__header">
+              <img src=${item.image} alt="card__image" class="card__image" width="600">
             </div>
-          </div>
+            <div class="card__body">
+              <span class="tag">News</span>
+              <h4>${item.title}</h4>
+              <p>${item.description}</p>
+            </div>
+            <button data-id=${blogid} class="read-more">Read More</button>
+            <div class="card__footer">
+              <div class="user">
+                <img src="https://i.pravatar.cc/40" alt="user__image" class="user__image">
+                <div class="user__info">
+                  <h5>${item.user}</h5>
+                  <small>${item.timestamp}</small>
+                </div>
+              </div>
+            </div>
         </div>
+      `;
 
-    </div>
-  `;
-  
-  // parent.appendChild(parent);
-  
-  
-});
+    });
+    window.localStorage.removeItem("mewblogid");
+    
+    
 
-let readMoreButtons = document.getElementsByClassName("read-more");
-let buttonsArray = Array.from(readMoreButtons);
 
-buttonsArray.forEach((btn) => {
-  btn.addEventListener("click", (e) => {
-    let blogId = e.target.getAttribute("data-id");
-    this.localStorage.setItem('blogID' ,blogId )
-  });
-});
+
+    let readMoreButtons = parent.querySelectorAll('.read-more');
+    readMoreButtons.forEach(button => {
+      button.onclick = function(event) {
+        var id = event.target.dataset.id;
+           // Use event.target.dataset.id to get the data-id attribute
+    window.location.reload();
+
+        localStorage.setItem("newblogid", id);
+        // Call the function to handle the click event
+        // let blogid = localStorage.getItem("blogid");
+        window.location.href='./blogs/index.html'
+        // handleReadMoreClick(blogid);
+      };
+    });
+
+    
+    
+
+
+// let readMoreButtons = document.getElementsByClassName("read-more");
+// let buttonsArray = Array.from(readMoreButtons);
+
+// buttonsArray.forEach((btn) => {
+//   btn.addEventListener("click", (e) => {
+//     let blogId = e.target.getAttribute("data-id");
+//     this.localStorage.setItem('blogID' ,blogId );
+//     console.log(blogId);
+//   });
+// });
 // console.log(readMoreButton)
 
 // console.log(readMoreButton)
@@ -217,6 +247,8 @@ buttonsArray.forEach((btn) => {
       link: link.value,
       image: imageURL,
       timestamp: timestamp.toLocaleString(),
+      // blogId: doc.id
+
       // timestamp: timestamp,
     };
     console.log(postObj);
@@ -231,14 +263,14 @@ buttonsArray.forEach((btn) => {
     description.value = "";
     link.value = "";
     file.value = "";
-
+    window.location.reload();
     // window.location.reload();
   }
   
   window.addpost = addpost;
 
 
-  function createUI(user,title,description,image,link,timestamp) {
+  function createUI(user,title,description,image,link,DocrefId,timestamp) {
     var length = description.length;
     timestamp = new Date().toLocaleString();
     // Unique ID for each card
@@ -255,12 +287,14 @@ buttonsArray.forEach((btn) => {
       <p class="card-body">
         ${description}
       </p>
+      <button data-id=${timestamp} class="read-more">Read More</button>
       <p class="footer">Written by <span class="by-name">${user}</span> on <span class="date">${timestamp}</span></p>
     </div>
   </a>
   </div>`;
   
     return UI;
+    
   }
   
   window.createUI = createUI;
