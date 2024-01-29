@@ -742,6 +742,35 @@ nav {
           background-repeat: no-repeat;
         }
 
+                .card__body p {
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  display: -webkit-box;
+                  -webkit-line-clamp: 3;
+                  /* Number of lines to show */
+                  -webkit-box-orient: vertical;
+                }
+
+
+                .read-more {
+                  width: 150px;
+                  height: 60px;
+                  border: 3px solid #315cfd;
+                  border-radius: 45px;
+                  transition: all 0.3s;
+                  cursor: pointer;
+                  background: white;
+                  font-size: 1.2em;
+                  font-weight: 550;
+                  font-family: 'Montserrat', sans-serif;
+                }
+        
+                .read-more:hover {
+                  background: #315cfd;
+                  color: white;
+                  font-size: 1.5em;
+                }
+
         @media screen and (max-width: 515px) {
           .card{
             width: clamp(20rem, calc(20rem + 2vw), 22rem);
