@@ -1,3 +1,11 @@
+// All the coding done by Owais Rafiq 
+// linkedin id: https://www.linkedin.com/in/owais-rafiq-639494253/
+// to access to the dashboard only use google account
+// email: blog@syslab.ai
+// Password: Blog@ai321!
+//else you cannot to access in the dashboard so it is necesssary to login with this account
+
+
 import {
     getFirestore,
     collection,
@@ -24,14 +32,13 @@ import {
 
   function logout() {
     localStorage.removeItem("uid");
-    window.location.href = "index.html";
+    window.location.href = "login.html";
   }
   window.logout = logout;
 
 
   document.getElementById('close-btn').addEventListener('click', function (event) {
     event.preventDefault();
-    // Additional code if needed
   });
   
 
@@ -41,16 +48,7 @@ import {
   
   
   
-  
-  // upload image function
-  // document.getElementById('upload-btn').addEventListener('click', function (event) {
-  //   // Prevent the default button behavior, which may be closing the modal
-  //   event.preventDefault();
-  
-  //   // Trigger click on the hidden file input
-  //   document.getElementById('file-input').click();
-  // });
-  
+
   // Handle file selection
   document.getElementById('file-input').addEventListener('change', function () {
     // Access the selected file(s) using this.files

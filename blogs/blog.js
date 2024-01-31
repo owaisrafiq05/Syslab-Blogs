@@ -1,3 +1,7 @@
+// All the coding done by Owais Rafiq 
+// linkedin id: https://www.linkedin.com/in/owais-rafiq-639494253/
+
+
 import {
   getFirestore,
   collection,

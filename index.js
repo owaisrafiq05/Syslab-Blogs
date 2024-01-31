@@ -1,8 +1,18 @@
+// All the coding done by Owais Rafiq 
+// linkedin id: https://www.linkedin.com/in/owais-rafiq-639494253/
+// to access to the dashboard only use google account
+// email: blog@syslab.ai
+// Password: Blog@ai321!
+//else you cannot to access in the dashboard so it is necesssary to login with this account
+
+
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
 import {
   getAuth,
   createUserWithEmailAndPassword,
+   signInWithPopup, 
+   GoogleAuthProvider,
   signInWithEmailAndPassword,
 } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-auth.js";
 
@@ -20,23 +30,60 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-function signupFunc(event) {
-  event.preventDefault();
-  console.log("signupFunc");
-  var email = document.getElementById("email").value;
-  var password = document.getElementById("password").value;
 
-  createUserWithEmailAndPassword(auth, email, password)
-    .then(function (userCredential) {
-      var user = userCredential.user;
-      console.log(user, "success");
-      alert("Account has been created successfully!");
-      window.location.href = "./index.html";
+let google = document.getElementById("google");
+const provider = new GoogleAuthProvider();
+google.addEventListener("click",() => {
+  signInWithPopup(auth, provider)
+    .then((result) => {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      // The signed-in user info.
+      const user = result.user;
+      if(user.uid === "9MMFjmwUloSzSh55BLasqFZo2cy1"){
+      localStorage.setItem("uid", user.uid);
+      window.location.href = "dashboard.html";
+      }
+      else{
+        alert("You are not authorized to access this dashboard.");
+      }
+      // IdP data available using getAdditionalUserInfo(result)
+      // ...
     })
-    .catch(function (error) {
-      console.log(error, "error");
+    .catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.customData.email;
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      // ...
     });
-}
+})
+
+
+
+
+
+// function signupFunc(event) {
+//   event.preventDefault();
+//   console.log("signupFunc");
+//   var email = document.getElementById("email").value;
+//   var password = document.getElementById("password").value;
+
+//   createUserWithEmailAndPassword(auth, email, password)
+//     .then(function (userCredential) {
+//       var user = userCredential.user;
+//       console.log(user, "success");
+//       alert("Account has been created successfully!");
+//       window.location.href = "./index.html";
+//     })
+//     .catch(function (error) {
+//       console.log(error, "error");
+//     });
+// }
 
 function loginFunc(event) {
   event.preventDefault();
@@ -49,9 +96,14 @@ function loginFunc(event) {
     .then((userCredential) => {
       const user = userCredential.user;
       console.log(user);
-      localStorage.setItem("uid", user.uid);
-      alert("Successfully Login");
-      window.location.href = "dashboard.html";
+      if(user.uid === "9MMFjmwUloSzSh55BLasqFZo2cy1"){
+        localStorage.setItem("uid", user.uid);
+        alert("Successfully Login");
+        window.location.href = "dashboard.html";
+        }
+        else{
+          alert("You are not authorized to access this dashboard.");
+        }
     })
     .catch((error) => {
       const errorCode = error.code;
