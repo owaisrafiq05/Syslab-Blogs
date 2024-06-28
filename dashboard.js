@@ -1,8 +1,6 @@
 // All the coding done by Owais Rafiq 
 // linkedin id: https://www.linkedin.com/in/owais-rafiq-639494253/
 // to access to the dashboard only use google account
-// email: blog@syslab.ai
-// Password: Blog@ai321!
 //else you cannot to access in the dashboard so it is necesssary to login with this account
 
 
